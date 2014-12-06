@@ -34,7 +34,7 @@ data$Sub_metering_3 <- as.numeric(as.character(data$Sub_metering_3))
 # Plot timeseries of Global Active Power
 png(filename="Plot4.png", width=480, height=480, units="px", pointsize=12,
     bg="white")
-par(mfrow = c(2,2), mar=c(4,4,4,0), oma=c(0,0,0,6)) # 2 X 2 plotting pane
+par(mfrow = c(2,2), mar=c(4,4,4,1), oma=c(0,0,0,0)) # 2 X 2 plotting pane
 # Top left plot
 plot(data$TimeStamp,data$Global_active_power,main="",
      xlab="",ylab="Global Active Power",type="l",cex.lab=.75,

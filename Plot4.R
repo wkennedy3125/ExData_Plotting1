@@ -1,13 +1,13 @@
-
-
-
-# Exploratory Data Analysis
-# Project 1
 # Plot4.R
+# Exploratory Data Analysis: Project 1
+#
+# Author: William Kennedy
+# Date: December 2014
+##############################################################################
 # Description:
 #    Timeseries of 'Global Active Power'
 #    from 2007-02-01 to 2007-02-02
-
+##############################################################################
 # READ DATA
 setwd("/Users/adakemia/Documents/Academic/Coursera/DataScienceSpecialization/04ExploratoryDataAnalysis/Project1/ExData_Plotting1")
 library(dplyr) # for filter()

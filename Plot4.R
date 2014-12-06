@@ -32,6 +32,8 @@ data$Sub_metering_2 <- as.numeric(as.character(data$Sub_metering_2))
 data$Sub_metering_3 <- as.numeric(as.character(data$Sub_metering_3))
 
 # Plot timeseries of Global Active Power
+png(filename="Plot4.png", width=480, height=480, units="px", pointsize=12,
+    bg="white")
 par(mfrow = c(2,2), mar=c(4,4,4,0), oma=c(0,0,0,6)) # 2 X 2 plotting pane
 # Top left plot
 plot(data$TimeStamp,data$Global_active_power,main="",
@@ -57,5 +59,5 @@ plot(data$TimeStamp,data$Global_reactive_power,main="",cex.lab=.75,
 
 
 # Copy Plot to a PNG file
-dev.copy(png, pointsize=10, file = "Plot4.png")  
+#dev.copy(png, pointsize=10, file = "Plot4.png")  
 dev.off()

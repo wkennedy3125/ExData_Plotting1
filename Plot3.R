@@ -31,7 +31,7 @@ data$Sub_metering_3 <- as.numeric(as.character(data$Sub_metering_3))
 # Plot timeseries of Global Active Power
 png(filename="Plot3.png", width=480, height=480, units="px", pointsize=12,
     bg="white")
-par(mar=c(4,4,4,4),oma=c(0,0,0,0))
+par(mfrow = c(1,1), mar=c(4,4,4,4),oma=c(0,0,0,0))
 plot(data$TimeStamp,data$Sub_metering_1,main="",
      xlab="",ylab="Energy sub metering",cex.lab=1,cex.axis=1,
      type="l")

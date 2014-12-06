@@ -42,21 +42,21 @@ IsThisFileAvailable(file1, fileDir)
 # Read in full data set (after confirming size and requirements)
 # NOTE: may need to reduce prior to reading in using grep,sed,awk,etc
 #       In this case, on my current machine, not needed
-#data_full <- fread("./data/household_power_consumption.txt", na.strings="?",
-#            stringsAsFactors=FALSE)
+data_full <- fread("./data/household_power_consumption.txt", na.strings="?",
+            stringsAsFactors=FALSE)
 #dim(data_full)
 # Subset data by Date using dplyr
-#data <- filter(data_full, grep("^[1,2]/2/2007", Date))
+data <- filter(data_full, grep("^[1,2]/2/2007", Date))
 #dim(data)
 # OR subset using data.table (better probably)
 # (will add this later)
 
-# OR subset prior to importing (best)
-system("grep '^[1,2]/2/2007' ./data/household_power_consumption.txt > ./data/household_power_consumption_subset.txt")
-data <- fread("./data/household_power_consumption_subset.txt", na.strings="?",
-                   stringsAsFactors=FALSE)
-dim(data)
-str(data)
+# OR subset prior to importing (best but need to get first line so needs work)
+#system("egrep '^household|^[1,2]/2/2007' ./data/household_power_consumption.txt > ./data/household_power_consumption_subset.txt")
+#data <- fread("./data/household_power_consumption_subset.txt", na.strings="?",
+#                   stringsAsFactors=FALSE, header=TRUE)
+#dim(data)
+#str(data)
 # Data cleaning
 #---------------------------
 # Make numeric for graphing

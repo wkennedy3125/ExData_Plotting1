@@ -37,12 +37,9 @@ plot(data$TimeStamp,data$Sub_metering_1,main="",
      type="l")
 lines(data$TimeStamp,data$Sub_metering_2, col="red")
 lines(data$TimeStamp,data$Sub_metering_3, col="blue")
-# legend("topright", legend = c("Sub_metering_1","Sub_metering_2",
-#                               "Sub_metering_3"),lty=1, 
-#        col=c("black", "red", "blue"), cex=1)
 legend("topright", legend = c("Sub_metering_1","Sub_metering_2",
                               "Sub_metering_3"),lty=1, 
-       col=c("blue", "black", "red"), cex=1)
+       col=c("black", "red", "blue"), cex=1)
 
 # Copy Plot to a PNG file
 #dev.copy(png, pointsize=12, file = "Plot3.png")  

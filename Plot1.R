@@ -8,71 +8,78 @@
 #    Histogram of 'Global Active Power'
 #    from 2007-02-01 to 2007-02-02
 ##############################################################################
+# System Information
+##############################################################################
+# Set OS <- "mac", "windows", "linux", or "other"
+#-----------------------------
+OS <- "mac"
+##############################################################################
 # Set working directory
-#setwd("/Users/adakemia/Documents/Academic/Coursera/DataScienceSpecialization/04ExploratoryDataAnalysis/Projects/Project1/ExData_Plotting1")
+#-----------------------------
+setwd("/Users/adakemia/Documents/Academic/Coursera/DataScienceSpecialization/04ExploratoryDataAnalysis/Projects/Project1/ExData_Plotting1")
 #list.files("../")
 ##############################################################################
 # Package dependencies
 ##############################################################################
-library(dplyr) # for filter()
 library(data.table) # for fread()
 ##############################################################################
 # Source file and function dependencies
 ##############################################################################
-# IsThisFileAvailable(file, fileDir=NULL<optional>)
-#          NOTE: fileDir is RELATIVE to WORKING DIRECTORY
-source("./FileHandlingFunctions.R")
+# NONE
 ##############################################################################
 # File / data dependencies
 ##############################################################################
-file1 <- "household_power_consumption.txt"
-# Data directory: where the files / data are located relative to 
-# working directory (i.e., the data subdirectory)
-fileDir <- "data"
-# Check if file exists in the working directory
-IsThisFileAvailable(file1, fileDir)  #Just playing around with potential
-                                     #helper functions
-#IsThisFileAvailable(file1)
+# include relative (to wd) or absolute path
+file1 <- "./data/household_power_consumption.txt"
+# if need to download
+fileURL <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+# Since dealing with a zip file
+zipName <- "./data/household_power_consumption.zip"
+exDir <- "./data" # NOTE: if data were in wd, could omit this
+
+# Check if file exists, and download (and extract) if necessary
+# will eventually put this in a separate helper functions list
+if(file.exists(file1)){ 
+        print("File available. Moving on....")
+
+}else{ 
+        print("File not available. Downloading now....")
+        method <- switch(tolower(OS), # code borrowed from jjmacky
+                        "windows" = "internal",
+                        "mac" = "curl",
+                        "linux" = "wget",
+                        "other" = "auto")
+        download.file(fileURL, destfile = zipName, method)
+        unzip(zipName, exdir = exDir)
+}
+
+
 ##############################################################################
 # MAIN 
 ##############################################################################
 
-# Read data
-#-------------------------
-
-# Read in full data set (after confirming size and requirements)
-# NOTE: may need to reduce prior to reading in using grep,sed,awk,etc
-#       In this case, on my current machine, not needed
-# data_full <- fread("./data/household_power_consumption.txt", na.strings="?",
-#             stringsAsFactors=FALSE)
-# dim(data_full)
-# Subset data by Date using dplyr
-# data <- filter(data_full, grep("^[1,2]/2/2007", Date))
-# dim(data)
-# OR subset using data.table (this would be better)
-# (will add this later)
-
-# OR subset prior to importing (best - wondering if I can get the following
-#                   into one line?)
-system("head -1 ./data/household_power_consumption.txt > ./data/household_power_consumption_subset.txt")
-system("grep '^[1,2]/2/2007' ./data/household_power_consumption.txt >> ./data/household_power_consumption_subset.txt")
-data <- fread("./data/household_power_consumption_subset.txt", na.strings="?",
-                   stringsAsFactors=FALSE, header=TRUE)
-#dim(data)
-#str(data)
+# READ AND SUBSET using data.table's fread
+#-----------------------------
+#system.time({ # 4.8 sec on my machine
+# NOTE: only works on unix variants, so my `switch` above is only partially 
+# helpful currently
+data <- fread("grep -e '^Date' -e '^[1,2]/2/2007' ./data/household_power_consumption.txt", na.strings="?",
+               stringsAsFactors=FALSE, header=TRUE)
+#        })
+#-----------------------------
 # Data cleaning
-#---------------------------
+#-----------------------------
 # Make numeric for graphing
 data$Global_active_power <- as.numeric(as.character(data$Global_active_power))
-
+#-----------------------------
 # Plot data
-#---------------------------
+#-----------------------------
 # Plot a histogram of Global Active Power
 hist(data$Global_active_power,breaks=12,main="Global Active Power",
      xlab="Global Active Power (kilowatts)",ylab="Frequency",col="red")
 
 # Copy Plot1 to a PNG file
-#---------------------------
+#-----------------------------
 dev.copy(png, file = "Plot1.png")  
 dev.off()
 

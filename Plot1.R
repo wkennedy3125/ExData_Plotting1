@@ -49,10 +49,11 @@ IsThisFileAvailable(file1, fileDir)  #Just playing around with potential
 # Subset data by Date using dplyr
 # data <- filter(data_full, grep("^[1,2]/2/2007", Date))
 # dim(data)
-# OR subset using data.table (better probably)
+# OR subset using data.table (this would be better)
 # (will add this later)
 
-# OR subset prior to importing (best but need to get first line so needs work)
+# OR subset prior to importing (best - wondering if I can get the following
+#                   into one line?)
 system("head -1 ./data/household_power_consumption.txt > ./data/household_power_consumption_subset.txt")
 system("grep '^[1,2]/2/2007' ./data/household_power_consumption.txt >> ./data/household_power_consumption_subset.txt")
 data <- fread("./data/household_power_consumption_subset.txt", na.strings="?",

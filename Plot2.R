@@ -8,6 +8,9 @@
 #    Timeseries of 'Global Active Power'
 #    from 2007-02-01 to 2007-02-02
 ##############################################################################
+# NOTE TO REVIEWER
+# Using more generic read and manipulate in Plot2-4.R
+##############################################################################
 # READ DATA
 setwd("/Users/adakemia/Documents/Academic/Coursera/DataScienceSpecialization/04ExploratoryDataAnalysis/Projects/Project1/ExData_Plotting1")
 library(dplyr) # for filter()
@@ -18,6 +21,9 @@ library(data.table) # for fread()
 data_full <- fread("./data/household_power_consumption.txt", na.strings="?",
                    stringsAsFactors=FALSE)
 # Subset data by Date
+# NOTE: using dplyr on data.table seems to be fine here
+#       Not sure if this is luck or not. I don't think I'll
+#       do this in the future.
 data <- filter(data_full, grep("^[1,2]/2/2007", Date))
 
 # Add single timestamp for simplification

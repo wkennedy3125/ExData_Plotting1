@@ -2,7 +2,7 @@
 # Exploratory Data Analysis: Project 1
 #
 # Author: William Kennedy
-# Date: December 2014
+# Date: January 2014
 ##############################################################################
 # Description:
 #    Histogram of 'Global Active Power'
@@ -60,12 +60,17 @@ if(file.exists(file1)){
 
 # READ AND SUBSET using data.table's fread
 #-----------------------------
-#system.time({ # 4.8 sec on my machine
+#system.time({ 
 # NOTE: only works on unix variants, so my `switch` above is only partially 
 # helpful currently
-data <- fread("grep -e '^Date' -e '^[1,2]/2/2007' ./data/household_power_consumption.txt", na.strings="?",
+data <- fread("ggrep -e '^Date' -e '^[1,2]/2/2007' ./data/household_power_consumption.txt", na.strings="?",
                stringsAsFactors=FALSE, header=TRUE)
 #        })
+#system.time({ # This one is faster
+#cc = c(rep("character", 2), rep("numeric", 7))
+#dt <- fread("head -n 1 ./data/household_power_consumption.txt; ggrep '^[12]/2/2007' ./data/household_power_consumption.txt", 
+#            sep = ";", header = T, na.strings = '?', colClasses = cc)
+#})
 #-----------------------------
 # Data cleaning
 #-----------------------------
@@ -76,7 +81,7 @@ data$Global_active_power <- as.numeric(as.character(data$Global_active_power))
 #-----------------------------
 # Plot a histogram of Global Active Power
 hist(data$Global_active_power,breaks=12,main="Global Active Power",
-     xlab="Global Active Power (kilowatts)",ylab="Frequency",col="red")
+     xlab="Global Active Power (kilowatts)",ylab="Frequency",col="blue")
 
 # Copy Plot1 to a PNG file
 #-----------------------------

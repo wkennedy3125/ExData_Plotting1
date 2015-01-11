@@ -10,15 +10,48 @@
 ##############################################################################
 # READ DATA
 setwd("/Users/adakemia/Documents/Academic/Coursera/DataScienceSpecialization/04ExploratoryDataAnalysis/Project1/ExData_Plotting1")
-library(dplyr) # for filter()
+
 library(data.table) # for fread()
-# Read in full data set (after confirming size and requirements)
-# NOTE: may need to reduce prior to reading in using grep,sed,awk,etc
-#       In this case not needed
-data_full <- fread("../household_power_consumption.txt", na.strings="?",
-                   stringsAsFactors=FALSE)
-# Subset data by Date
-data <- filter(data_full, grep("^[1,2]/2/2007", Date))
+##############################################################################
+# File / data dependencies
+##############################################################################
+# include relative (to wd) or absolute path
+file1 <- "./data/household_power_consumption.txt"
+# if need to download
+fileURL <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+# Since dealing with a zip file
+zipName <- "./data/household_power_consumption.zip"
+exDir <- "./data" # NOTE: if data were in wd, could omit this
+
+# Check if file exists, and download (and extract) if necessary
+# will eventually put this in a separate helper functions list
+if(file.exists(file1)){ 
+        print("File available. Moving on....")
+        
+}else{ 
+        print("File not available. Downloading now....")
+        method <- switch(tolower(OS), # code borrowed from jjmacky
+                         "windows" = "internal",
+                         "mac" = "curl",
+                         "linux" = "wget",
+                         "other" = "auto")
+        download.file(fileURL, destfile = zipName, method)
+        unzip(zipName, exdir = exDir)
+}
+
+
+##############################################################################
+# MAIN 
+##############################################################################
+
+# READ AND SUBSET using data.table's fread
+#-----------------------------
+#system.time({ 
+# NOTE: only works on unix variants, so my `switch` above is only partially 
+# helpful currently
+data <- fread("ggrep -e '^Date' -e '^[1,2]/2/2007' ./data/household_power_consumption.txt", na.strings="?",
+              stringsAsFactors=FALSE, header=TRUE)
+#        })
 
 # Add single timestamp for simplification
 data[, TimeStamp := as.POSIXct(strptime(paste(Date,Time), format = "%d/%m/%Y %H:%M:%S"))]
@@ -51,7 +84,7 @@ lines(data$TimeStamp,data$Sub_metering_2, col="red")
 lines(data$TimeStamp,data$Sub_metering_3, col="blue")
 legend("topright", legend = c("Sub_metering_1","Sub_metering_2",
                               "Sub_metering_3"),lty=1, 
-       col=c("black", "red", "blue"), cex=.5,xjust=0,y.intersp=1,
+       col=c("black", "red", "green"), cex=.5,xjust=0,y.intersp=1,
        x.intersp=.75,bty="n")
 # Bottom right plot
 plot(data$TimeStamp,data$Global_reactive_power,main="",cex.lab=.75,

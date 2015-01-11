@@ -63,7 +63,7 @@ data$Global_active_power <- as.numeric(as.character(data$Global_active_power))
 
 # Plot timeseries of Global Active Power
 plot(data$TimeStamp,data$Global_active_power,main="Global Active Power",
-     xlab="Day",ylab="Global active Power (kilowatts)",type="l")
+     xlab="Day",ylab="Global Active Power (kilowatts)",type="l")
 
 
 # Copy Plot to a PNG file

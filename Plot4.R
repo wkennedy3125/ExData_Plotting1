@@ -84,7 +84,7 @@ lines(data$TimeStamp,data$Sub_metering_2, col="red")
 lines(data$TimeStamp,data$Sub_metering_3, col="blue")
 legend("topright", legend = c("Sub_metering_1","Sub_metering_2",
                               "Sub_metering_3"),lty=1, 
-       col=c("black", "red", "green"), cex=.5,xjust=0,y.intersp=1,
+       col=c("black", "red", "blue"), cex=.5,xjust=0,y.intersp=1,
        x.intersp=.75,bty="n")
 # Bottom right plot
 plot(data$TimeStamp,data$Global_reactive_power,main="",cex.lab=.75,

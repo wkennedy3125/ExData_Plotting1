@@ -2,29 +2,58 @@
 # Exploratory Data Analysis: Project 1
 #
 # Author: William Kennedy
-# Date: December 2014
+# Date: January 2014
 ##############################################################################
 # Description:
 #    Timeseries of 'Global Active Power'
 #    from 2007-02-01 to 2007-02-02
 ##############################################################################
-# NOTE TO REVIEWER
-# Using more generic read and manipulate in Plot2-4.R
+
 ##############################################################################
 # READ DATA
 setwd("/Users/adakemia/Documents/Academic/Coursera/DataScienceSpecialization/04ExploratoryDataAnalysis/Projects/Project1/ExData_Plotting1")
-library(dplyr) # for filter()
+
 library(data.table) # for fread()
-# Read in full data set (after confirming size and requirements)
-# NOTE: may need to reduce prior to reading in using grep,sed,awk,etc
-#       In this case not needed
-data_full <- fread("./data/household_power_consumption.txt", na.strings="?",
-                   stringsAsFactors=FALSE)
-# Subset data by Date
-# NOTE: using dplyr on data.table seems to be fine here
-#       Not sure if this is luck or not. I don't think I'll
-#       do this in the future.
-data <- filter(data_full, grep("^[1,2]/2/2007", Date))
+##############################################################################
+# File / data dependencies
+##############################################################################
+# include relative (to wd) or absolute path
+file1 <- "./data/household_power_consumption.txt"
+# if need to download
+fileURL <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
+# Since dealing with a zip file
+zipName <- "./data/household_power_consumption.zip"
+exDir <- "./data" # NOTE: if data were in wd, could omit this
+
+# Check if file exists, and download (and extract) if necessary
+# will eventually put this in a separate helper functions list
+if(file.exists(file1)){ 
+        print("File available. Moving on....")
+        
+}else{ 
+        print("File not available. Downloading now....")
+        method <- switch(tolower(OS), # code borrowed from jjmacky
+                         "windows" = "internal",
+                         "mac" = "curl",
+                         "linux" = "wget",
+                         "other" = "auto")
+        download.file(fileURL, destfile = zipName, method)
+        unzip(zipName, exdir = exDir)
+}
+
+
+##############################################################################
+# MAIN 
+##############################################################################
+
+# READ AND SUBSET using data.table's fread
+#-----------------------------
+#system.time({ 
+# NOTE: only works on unix variants, so my `switch` above is only partially 
+# helpful currently
+data <- fread("ggrep -e '^Date' -e '^[1,2]/2/2007' ./data/household_power_consumption.txt", na.strings="?",
+              stringsAsFactors=FALSE, header=TRUE)
+#        })
 
 # Add single timestamp for simplification
 data[, TimeStamp := as.POSIXct(strptime(paste(Date,Time), format = "%d/%m/%Y %H:%M:%S"))]
@@ -34,7 +63,7 @@ data$Global_active_power <- as.numeric(as.character(data$Global_active_power))
 
 # Plot timeseries of Global Active Power
 plot(data$TimeStamp,data$Global_active_power,main="Global Active Power",
-     xlab="Day",ylab="Global Active Power (kilowatts)",type="l")
+     xlab="Day",ylab="Global active Power (kilowatts)",type="l")
 
 
 # Copy Plot to a PNG file

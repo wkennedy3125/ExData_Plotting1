@@ -23,10 +23,6 @@ setwd("/Users/adakemia/Documents/Academic/Coursera/DataScienceSpecialization/04E
 ##############################################################################
 library(data.table) # for fread()
 ##############################################################################
-# Source file and function dependencies
-##############################################################################
-# NONE
-##############################################################################
 # File / data dependencies
 ##############################################################################
 # include relative (to wd) or absolute path
@@ -81,7 +77,7 @@ data$Global_active_power <- as.numeric(as.character(data$Global_active_power))
 #-----------------------------
 # Plot a histogram of Global Active Power
 hist(data$Global_active_power,breaks=12,main="Global Active Power",
-     xlab="Global Active Power (kilowatts)",ylab="Frequency",col="blue")
+     xlab="Global Active Power (kilowatts)",ylab="Frequency",col="red")
 
 # Copy Plot1 to a PNG file
 #-----------------------------

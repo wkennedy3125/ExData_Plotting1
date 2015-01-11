@@ -2,7 +2,7 @@
 # Exploratory Data Analysis: Project 1
 #
 # Author: William Kennedy
-# Date: December 2014
+# Date: January 2014
 ##############################################################################
 # Description:
 #    Timeseries of 'Global Active Power'

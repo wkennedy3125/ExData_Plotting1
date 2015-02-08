@@ -8,80 +8,44 @@
 #    Histogram of 'Global Active Power'
 #    from 2007-02-01 to 2007-02-02
 ##############################################################################
-# System Information
-##############################################################################
-# Set OS <- "mac", "windows", "linux", or "other"
-#-----------------------------
-OS <- "mac"
+# ENVIRONMENT SETUP
 ##############################################################################
 # Set working directory
-#-----------------------------
+# Edit this information to match your system
 setwd("/Users/adakemia/Documents/Academic/Coursera/DataScienceSpecialization/04ExploratoryDataAnalysis/Projects/Project1/ExData_Plotting1")
-#list.files("../")
-##############################################################################
+
+# The following file contains all shared functions for Plot[1-4].R
+source("Functions_ExData_Plotting1.R")
+
 # Package dependencies
+LoadPackageDependencies()
 ##############################################################################
-library(data.table) # for fread()
+# DATA FILE PROCESSING
 ##############################################################################
 # File / data dependencies
-##############################################################################
-# include relative (to wd) or absolute path
-file1 <- "./data/household_power_consumption.txt"
-# if need to download
-fileURL <- "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
-# Since dealing with a zip file
-zipName <- "./data/household_power_consumption.zip"
-exDir <- "./data" # NOTE: if data were in wd, could omit this
+# Sets 'file1','fileURL','zipName', and 'exDir'
+files <- SetDataFileInformation()
 
 # Check if file exists, and download (and extract) if necessary
-# will eventually put this in a separate helper functions list
-if(file.exists(file1)){ 
-        print("File available. Moving on....")
+CheckForGetDataFile(files$file1, files$fileURL, files$zipName, files$exDir)
 
-}else{ 
-        print("File not available. Downloading now....")
-        method <- switch(tolower(OS), # code borrowed from jjmacky
-                        "windows" = "internal",
-                        "mac" = "curl",
-                        "linux" = "wget",
-                        "other" = "auto")
-        download.file(fileURL, destfile = zipName, method)
-        unzip(zipName, exdir = exDir)
-}
+# Uses fread from data.table and 'ggrep'
+# If you don't have ggrep installed, you can use grep
+data <- LoadData()
 
+# Updates a few data types for graphing
+data <- ProcessData(data)
 
 ##############################################################################
-# MAIN 
+# MAIN - Plot1.R
 ##############################################################################
 
-# READ AND SUBSET using data.table's fread
-#-----------------------------
-#system.time({ 
-# NOTE: only works on unix variants, so my `switch` above is only partially 
-# helpful currently
-data <- fread("ggrep -e '^Date' -e '^[1,2]/2/2007' ./data/household_power_consumption.txt", na.strings="?",
-               stringsAsFactors=FALSE, header=TRUE)
-#        })
-#system.time({ # This one is faster
-#cc = c(rep("character", 2), rep("numeric", 7))
-#dt <- fread("head -n 1 ./data/household_power_consumption.txt; ggrep '^[12]/2/2007' ./data/household_power_consumption.txt", 
-#            sep = ";", header = T, na.strings = '?', colClasses = cc)
-#})
-#-----------------------------
-# Data cleaning
-#-----------------------------
-# Make numeric for graphing
-data$Global_active_power <- as.numeric(as.character(data$Global_active_power))
-#-----------------------------
-# Plot data
-#-----------------------------
+png(filename="Plot1.png", width=480, height=480, units="px", pointsize=12,
+    bg="white")
 # Plot a histogram of Global Active Power
 hist(data$Global_active_power,breaks=12,main="Global Active Power",
      xlab="Global Active Power (kilowatts)",ylab="Frequency",col="red")
-
-# Copy Plot1 to a PNG file
-#-----------------------------
-dev.copy(png, file = "Plot1.png")  
+  
 dev.off()
 
 

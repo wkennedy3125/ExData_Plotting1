@@ -60,7 +60,7 @@ CheckForGetDataFile <- function(file1, fileURL, zipName, exDir){
 }
 
 LoadData <- function(){
-        system.time({ 
+        #system.time({ 
         # NOTE: grep/ggrep only works on unix variants, so my `switch` above 
         #       is only partially helpful currently. There is a windows
         #       equivalent to grep. 
@@ -68,7 +68,7 @@ LoadData <- function(){
         #        ggrep is MUCH faster than grep on mac osx
         data <- fread("ggrep -E '^Date|^[1,2]/2/2007' ./data/household_power_consumption.txt", na.strings="?",
                       stringsAsFactors=FALSE, header=TRUE)
-                })
+        #        })
         return(data)
 }
 

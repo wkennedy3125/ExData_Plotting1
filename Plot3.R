@@ -41,7 +41,7 @@ data <- ProcessData(data)
 ##############################################################################
 
 
-# Plot Energy Sub-Metering
+# Plot Energy Sub-Metering by type
 png(filename="Plot3.png", width=480, height=480, units="px", pointsize=12,
     bg="white")
 par(mfrow = c(1,1), mar=c(4,4,4,4),oma=c(0,0,0,0))

@@ -40,7 +40,11 @@ data <- ProcessData(data)
 # MAIN - Plot4.R
 ##############################################################################
 
-# Plot timeseries of Global Active Power
+# Plot 2 X 2 grid of four graphs, clockwise from top left
+# 1. timeseries of Global Active Power,
+# 2. Voltage
+# 3. Global reactive power
+# 4. Energy sub-metering
 # open and send plot to png device
 png(filename="Plot4.png", width=480, height=480, units="px", pointsize=12,
     bg="white")

@@ -73,7 +73,7 @@ LoadData <- function(){
 }
 
 ProcessData <- function(data){
-        print("Loading data. Please wait....")
+        print("Processing data. Please wait....")
         # Add single timestamp for simplification
         data[, TimeStamp := as.POSIXct(strptime(paste(Date,Time), format = "%d/%m/%Y %H:%M:%S"))]
         

@@ -31,6 +31,7 @@ CheckForGetDataFile(files$file1, files$fileURL, files$zipName, files$exDir)
 
 # Uses fread from data.table and 'ggrep'
 # If you don't have ggrep installed, you can use grep
+# or Windows equivalent
 data <- LoadData()
 
 # Updates a few data types for graphing

@@ -5,7 +5,11 @@
 # Date: February 2015
 ##############################################################################
 # Description:
-#    Timeseries of 'Global Active Power'
+#    Plot four graphs in 2 X 2 grid:
+#    Histogram of Global Active Power
+#    Time series of GAP
+#    Energy sub-metering by type
+#    Global reactive power
 #    from 2007-02-01 to 2007-02-02
 ##############################################################################
 # ENVIRONMENT SETUP

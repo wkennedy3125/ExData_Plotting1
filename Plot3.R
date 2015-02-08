@@ -5,7 +5,7 @@
 # Date: February 2015
 ##############################################################################
 # Description:
-#    Timeseries of 'Global Active Power'
+#    Plot Energy sub-metering by type 
 #    from 2007-02-01 to 2007-02-02
 ##############################################################################
 # ENVIRONMENT SETUP
